@@ -1,0 +1,9 @@
+Inicializar package.json: npm init --y
+2. Instalar Express: npm i express
+2.1 Inslatar types de express: npm i -D @types/express
+3. Instalar Nodemon para reiniciar el servidor y ts-node (TypeScript de CDLI de Node), e instalar TypeScript: npm i -D nodemon ts-node typescript
+4. Instalar Colors para los mensajes del servidor: npm i colors
+5. Instalar DOTENV: npm install dotenv
+6. Instalar Mongoose para las conexiones con mongodb: npm install express mongoose
+7. Instalar validaciones de express en los endpoints: npm i express-validator
+8. Instalar CORS: npm i cors | types: npm i -D @types/cors

@@ -1,0 +1,21 @@
+¿Qué es Nested Resource Routing?
+
+El "Nested Resource Routing" o "Enrutamento de Recursos Anidados" es un patrón de diseño de la contruccíón de
+URLs para APIs, especialmente en APIs RESTful, donde las relaciones jerárquicas entre recursos son expresadas
+en la estructura de la URL. Este patrón es muy común en aplicaciones web y móviles que manejan datros relacionados
+en forma de recursos.
+
+Ventajas:
+
+/projects/:projectId/tasks
+
+=> Si el proyecto existe, si el usuario tiene permisos, crear tareas en ese proyecto
+
+Middleware:
+
+Un Middleware nos va a permitir darle un mejor orden a nuestras rutas para aplicar este patrón diseño para
+las URLs
+
+Debido a que los Middleware se ejecutan en las peticiones HTTP y antes del controlador, los hacen un lugar para
+poder ejecutar ciertas acciones referentes a si los proyectos existen o si el usuario tiene permisos para acceder
+a él.

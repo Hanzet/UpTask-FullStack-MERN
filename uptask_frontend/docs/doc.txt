@@ -1,0 +1,37 @@
+Simplificació de llamado de rutas:
+
+Instalar primero: npm i -D @types/node.
+
+En vite.config.ts importar:
+-> import { fileURLToPath, URL } from 'node:url'
+
+Luego:
+
+  resolve: {
+    alias: {
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
+    },
+  },
+
+Luego en tsconfig.app.json, después en compilerOptions poner dependiendo lo que quiera utiliza:
+
+    "baseUrl": "src",
+    "paths": {
+      "@/components/*": ["components/*"],
+      "@/layouts/*": ["layouts/*"],
+      "@/views/*": ["views/*"],
+      "@/router/*": ["router/*"],
+      "@/main/*": ["main/*"],
+      "@/index/*": ["index/*"],
+      "@/assets/*": ["assets/*"],
+      "@/utils/*": ["utils/*"],
+      "@/styles/*": ["styles/*"],
+      "@/types/*": ["types/*"],
+      "@/hooks/*": ["hooks/*"],
+      "@/context/*": ["context/*"],
+      "@/api/*": ["api/*"],
+    },
+
+
+Inslatar headless ui React y Hero Icons de React: npm i @headlessui/react @heroicons/react
+Instalar React Toastify: npm i react-toastify
