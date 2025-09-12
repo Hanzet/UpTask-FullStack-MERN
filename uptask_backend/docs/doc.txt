@@ -7,3 +7,4 @@ Inicializar package.json: npm init --y
 6. Instalar Mongoose para las conexiones con mongodb: npm install express mongoose
 7. Instalar validaciones de express en los endpoints: npm i express-validator
 8. Instalar CORS: npm i cors | types: npm i -D @types/cors
+9 Instalar Morgan: npm i morgan | npm i -D @types/morgan
