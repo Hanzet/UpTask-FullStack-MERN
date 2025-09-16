@@ -3,7 +3,7 @@ import ProjectForm from "./ProjectForm";
 import { useForm } from "react-hook-form";
 import type { ProjectFormData, Project } from "types";
 import { updateProject } from "@/api/ProjectAPI";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 
 type EditProjectFormProps = {
@@ -28,12 +28,16 @@ export default function EditProjectForm({
     },
   });
 
+  // InvalidateQueries es para invalidar las consultas de la queryClient
+  const queryClient = useQueryClient();
   const { mutate } = useMutation({
     mutationFn: updateProject,
     onError: (error) => {
       toast.error(error.message);
     },
     onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ["projects"] }); // Invalidar las consultas de la queryClient, para que se actualice la lista de proyectos
+      queryClient.invalidateQueries({ queryKey: ["editProject", projectId] }); // Invalido editar proyecto, para que se actualice el proyecto editado
       toast.success(data);
       navigate("/");
     },
