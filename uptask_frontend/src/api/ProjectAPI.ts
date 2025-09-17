@@ -1,4 +1,8 @@
-import { dashboardProjectSchema, type ProjectFormData, type Project } from "../types";
+import {
+  dashboardProjectSchema,
+  type ProjectFormData,
+  type Project,
+} from "../types";
 import { isAxiosError } from "axios";
 import api from "@/lib/axios";
 
@@ -24,7 +28,7 @@ export async function getProjects() {
   try {
     const { data } = await api.get("/projects");
     const response = dashboardProjectSchema.safeParse(data);
-    if(response.success) {
+    if (response.success) {
       return response.data;
     }
   } catch (error) {
@@ -34,7 +38,7 @@ export async function getProjects() {
   }
 }
 
-export async function getProjectById(id: Project['_id']) {
+export async function getProjectById(id: Project["_id"]) {
   try {
     const { data } = await api.get(`/projects/${id}`);
     return data;
@@ -47,10 +51,10 @@ export async function getProjectById(id: Project['_id']) {
 
 type projectAPIType = {
   formData: ProjectFormData;
-  projectId: Project['_id'];
-}
+  projectId: Project["_id"];
+};
 
-export async function updateProject({formData, projectId}: projectAPIType) {
+export async function updateProject({ formData, projectId }: projectAPIType) {
   try {
     const { data } = await api.put<string>(`/projects/${projectId}`, formData);
     return data;
@@ -61,7 +65,7 @@ export async function updateProject({formData, projectId}: projectAPIType) {
   }
 }
 
-export async function deleteProject(id: Project['_id']) {
+export async function deleteProject(id: Project["_id"]) {
   try {
     const { data } = await api.delete<string>(`/projects/${id}`);
     return data;
