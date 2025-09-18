@@ -9,7 +9,7 @@ export class TaskController {
       req.project.tasks.push(task.id); // Añadimos la tarea al proyecto
       // await task.save(); // Guardamos la tarea
       // await req.project.save(); // Guardamos el proyecto
-      Promise.allSettled([task.save(), req.project.save()]); // Guardamos la tarea y el proyecto de forma asíncrona
+      await Promise.allSettled([task.save(), req.project.save()]); // Guardamos la tarea y el proyecto de forma asíncrona
       res.json(task);
     } catch (error) {
       res.status(500).json({ message: "Error al crear la tarea" });
