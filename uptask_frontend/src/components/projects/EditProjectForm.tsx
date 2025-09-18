@@ -61,7 +61,7 @@ export default function EditProjectForm({
 
         <nav className="my-5">
           <Link
-            className="bg-purple-400 hover:bg-purple-500 px-10 py-3 text-white text-xl font-bold cursor-pointer transition-colors"
+            className="bg-cyan-400 hover:bg-cyan-500 px-10 py-3 text-white text-xl font-bold cursor-pointer transition-colors"
             to="/"
           >
             Volver a Proyectos
@@ -77,7 +77,7 @@ export default function EditProjectForm({
           <input
             type="submit"
             value="Guardar Cambios"
-            className="bg-fuchsia-600 hover:bg-fuchsia-700 w-full p-3 text-white uppercase font-bold cursor-pointer transition-colors"
+            className="bg-cyan-600 hover:bg-cyan-700 w-full p-3 text-white uppercase font-bold cursor-pointer transition-colors"
           />
         </form>
       </div>

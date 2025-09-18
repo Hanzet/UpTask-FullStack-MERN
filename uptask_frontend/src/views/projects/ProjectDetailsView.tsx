@@ -2,6 +2,7 @@ import { useParams, Navigate, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { getProjectById } from "@/api/ProjectAPI";
 import AddTaskModal from "@/components/tasks/AddTaskModal";
+import TaskList from "@/components/tasks/TaskList";
 
 export default function ProjectDetailsView() {
   const navigate = useNavigate();
@@ -27,13 +28,14 @@ export default function ProjectDetailsView() {
         <nav className="my-5 flex gap-3">
           <button
             type="button"
-            className="bg-purple-400 hover:bg-purple-500 px-10 py-3 text-white text-xl font-bold cursor-pointer transition-colors"
+            className="bg-cyan-400 hover:bg-cyan-500 px-10 py-3 text-white text-xl font-bold cursor-pointer transition-colors"
             onClick={() => navigate(location.pathname + '?newTask=true')} // ?newTask=true es para que se agregue la tarea al proyecto
           >
             Agregar Tarea
           </button>
         </nav>
 
+        <TaskList tasks={data.tasks} />
         <AddTaskModal />
       </>
     );
