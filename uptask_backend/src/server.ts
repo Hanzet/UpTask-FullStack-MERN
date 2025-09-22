@@ -1,10 +1,11 @@
-import { corsConfig } from "../config/cors";
+import { corsConfig } from "./config/cors";
 import { connectDB } from "./config/db";
 import morgan from "morgan";
 import projectRoutes from "./routes/projectRoutes";
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
+import authRoutes from "./routes/authRoutes";
 
 dotenv.config();
 
@@ -22,6 +23,7 @@ app.use(express.json()); // Habilitar la lectura de datos en formato JSON
 
 // Routes (utilizamos app.use para que se ejecuten todas las rutas)
 
+app.use('/api/auth', authRoutes);
 app.use('/api/projects', projectRoutes);
 
 export default app;

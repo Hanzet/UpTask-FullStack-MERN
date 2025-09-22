@@ -1,16 +1,5 @@
 import type { Request, Response, NextFunction } from "express";
-import Task, { ITask } from "../models/Task";
-
-// Declaramos el scope global de Express
-declare global {
-  namespace Express {
-    // namespace Express es para declarar el scope global de Express
-    interface Request {
-      // interface Request es para declarar el tipo de dato de la request
-      task: ITask; // project es para declarar el tipo de dato de la request
-    }
-  }
-}
+import Task from "../models/Task";
 
 export async function taskExists(
   req: Request,

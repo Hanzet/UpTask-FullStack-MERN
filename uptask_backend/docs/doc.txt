@@ -8,3 +8,5 @@ Inicializar package.json: npm init --y
 7. Instalar validaciones de express en los endpoints: npm i express-validator
 8. Instalar CORS: npm i cors | types: npm i -D @types/cors
 9 Instalar Morgan: npm i morgan | npm i -D @types/morgan
+10 Instalar bcrypt: npm i bcrypt | npm i -D @types/bcrypt
+11 Instalar nodemailer para envio de correos npm i nodemailer | npm i -D @types/nodemailer

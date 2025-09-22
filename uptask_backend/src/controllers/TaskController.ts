@@ -1,5 +1,5 @@
 import type { Request, Response } from "express";
-import Task from "../models/Task";
+import Task, { taskStatus } from "../models/Task";
 
 export class TaskController {
   static createTask = async (req: Request, res: Response) => {
@@ -12,7 +12,11 @@ export class TaskController {
       await Promise.allSettled([task.save(), req.project.save()]); // Guardamos la tarea y el proyecto de forma asíncrona
       res.json(task);
     } catch (error) {
-      res.status(500).json({ message: "Error al crear la tarea" });
+      console.error("Error al crear la tarea:", error);
+      res.status(500).json({ 
+        message: "Error al crear la tarea",
+        error: error instanceof Error ? error.message : "Error desconocido"
+      });
     }
   };
 
@@ -23,7 +27,11 @@ export class TaskController {
       ); // Buscamos las tareas que pertenecen al proyecto y poblamos el proyecto, es decir, nos traemos el proyecto completo, el populate es para que nos traiga el proyecto completo
       res.json(tasks);
     } catch (error) {
-      res.status(500).json({ message: "Error al obtener las tareas" });
+      console.error("Error al obtener las tareas:", error);
+      res.status(500).json({ 
+        message: "Error al obtener las tareas",
+        error: error instanceof Error ? error.message : "Error desconocido"
+      });
     }
   };
 
@@ -44,7 +52,11 @@ export class TaskController {
       // }
       res.json(req.task);
     } catch (error) {
-      res.status(500).json({ message: "Error al obtener la tarea" });
+      console.error("Error al obtener la tarea:", error);
+      res.status(500).json({ 
+        message: "Error al obtener la tarea",
+        error: error instanceof Error ? error.message : "Error desconocido"
+      });
     }
   };
 
@@ -68,7 +80,11 @@ export class TaskController {
       await req.task.save();
       res.json("Tarea actualizada correctamente");
     } catch (error) {
-      res.status(500).json({ message: "Error al actualizar la tarea" });
+      console.error("Error al actualizar la tarea:", error);
+      res.status(500).json({ 
+        message: "Error al actualizar la tarea",
+        error: error instanceof Error ? error.message : "Error desconocido"
+      });
     }
   };
 
@@ -88,24 +104,36 @@ export class TaskController {
       await Promise.allSettled([req.task.deleteOne(), req.project.save()]); // Eliminamos la tarea y guardamos el proyecto
       res.json("Tarea eliminada correctamente");
     } catch (error) {
-      res.status(500).json({ message: "Error al eliminar la tarea" });
+      console.error("Error al eliminar la tarea:", error);
+      res.status(500).json({ 
+        message: "Error al eliminar la tarea",
+        error: error instanceof Error ? error.message : "Error desconocido"
+      });
     }
   };
 
   static updateStatus = async (req: Request, res: Response) => {
     try {
-      // const { taskId } = req.params;
-      // const task = await Task.findById(taskId);
-      // if (!task) {
-      //   const error = new Error("Tarea no encontrada");
-      //   return res.status(404).json({ message: error.message });
-      // }
       const { status } = req.body;
+      
+      // Validar que el estado sea válido
+      const validStatuses = Object.values(taskStatus);
+      if (!validStatuses.includes(status)) {
+        return res.status(400).json({ 
+          message: "Estado no válido", 
+          validStatuses: validStatuses 
+        });
+      }
+      
       req.task.status = status;
       await req.task.save();
       res.json("Estado de la tarea actualizado correctamente");
     } catch (error) {
-      res.status(500).json({ message: "Error al actualizar el estado de la tarea" });
+      console.error("Error al actualizar el estado de la tarea:", error);
+      res.status(500).json({ 
+        message: "Error al actualizar el estado de la tarea",
+        error: error instanceof Error ? error.message : "Error desconocido"
+      });
     }
   };
 }

@@ -59,7 +59,6 @@ router.delete(
 // Ejemplo de ruta: http://localhost:4000/api/projects/68afac477175061ede6ffb08/tasks
 
 router.param("projectId", projectExists); // Nos permite validar el proyecto antes de ejecutar el controlador, es una forma más sencilla de hacerlo sin necesidad de repetir el middleware en cada ruta
-router.param("taskId", taskBelongsToProject); // Nos permite validar la tarea antes de ejecutar el controlador, es una forma más sencilla de hacerlo sin necesidad de repetir el middleware en cada ruta
 
 router.post(
   "/:projectId/tasks",
@@ -78,7 +77,8 @@ router.get(
   TaskController.getProjectTasks
 );
 
-router.param("taskId", taskExists); // Nos permite validar la tarea antes de ejecutar el controlador, es una forma más sencilla de hacerlo sin necesidad de repetir el middleware en cada ruta
+router.param("taskId", taskExists); // Primero validar que la tarea existe
+router.param("taskId", taskBelongsToProject); // Luego validar que pertenece al proyecto
 
 router.get(
   "/:projectId/tasks/:taskId",
