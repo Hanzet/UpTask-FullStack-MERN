@@ -3,6 +3,8 @@ import { useQuery } from "@tanstack/react-query";
 import { getProjectById } from "@/api/ProjectAPI";
 import AddTaskModal from "@/components/tasks/AddTaskModal";
 import TaskList from "@/components/tasks/TaskList";
+import EditTaskData from "@/components/tasks/EditTaskData";
+import TaskModalDetails from "@/components/tasks/TaskModalDetails";
 
 export default function ProjectDetailsView() {
   const navigate = useNavigate();
@@ -10,7 +12,7 @@ export default function ProjectDetailsView() {
   const projectId = params.projectId!; // (!) es para decirle a TypeScript que el proyectoId existe
 
   const { data, isLoading, isError } = useQuery({
-    queryKey: ["editProject", projectId],
+    queryKey: ["project", projectId],
     queryFn: () => getProjectById(projectId),
     retry: false, // No se reintenta la consulta si hay un error
   });
@@ -37,6 +39,8 @@ export default function ProjectDetailsView() {
 
         <TaskList tasks={data.tasks} />
         <AddTaskModal />
+        <EditTaskData />
+        <TaskModalDetails />
       </>
     );
 }
