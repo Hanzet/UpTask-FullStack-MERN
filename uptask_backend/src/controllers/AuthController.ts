@@ -180,10 +180,52 @@ export class AuthController {
         token: token.token,
       });
       res.json({
-        message: "Revisa tu email para las instrucciones de restablecimiento de contraseña",
+        message:
+          "Revisa tu email para las instrucciones de restablecimiento de contraseña",
       });
     } catch (error) {
       res.json({ message: "Error al crear la cuenta" });
+    }
+  };
+
+  static validateToken = async (req: Request, res: Response) => {
+    try {
+      const { token } = req.body;
+
+      // Verificar si el token es válido
+      const tokenExists = await Token.findOne({ token });
+      if (!tokenExists) {
+        const error = new Error("Token no válido");
+        return res.status(404).json({ message: error.message });
+      }
+
+      res.json({ message: "Token válido. Puedes definir tu nueva contraseña" });
+    } catch (error) {
+      res.json({ message: "Error al validar el token" });
+    }
+  };
+
+  static updatePasswordWithToken = async (req: Request, res: Response) => {
+    try {
+      // Obtener el token de los parámetros (params)
+      const { token } = req.params;
+      const { password } = req.body;
+
+      // Verificar si el token es válido
+      const tokenExists = await Token.findOne({ token });
+      if (!tokenExists) {
+        const error = new Error("Token no válido");
+        return res.status(404).json({ message: error.message });
+      }
+
+      const user = await User.findById(tokenExists.user);
+      user.password = await hashPassword(password);
+
+      await Promise.allSettled([user.save(), tokenExists.deleteOne()]);
+
+      res.json({ message: "Contraseña actualizada correctamente" });
+    } catch (error) {
+      res.json({ message: "Error al actualizar la contraseña" });
     }
   };
 }
